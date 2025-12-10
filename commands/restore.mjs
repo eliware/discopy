@@ -15,16 +15,31 @@ import summarizeIntegrations from '../src/restore/summarizeIntegrations.mjs';
 
 export default async function ({ log, msg }, interaction) {
   log.debug('restore Request', { interaction });
-  const steps = ['Unpack backup','Create roles','Create categories','Create channels','Apply permission overwrites','Upload emojis','Upload stickers','Recreate webhooks','Recreate scheduled events','Recreate invites','Recreate bans','Apply member roles','Apply guild settings','Finalize'];
+  const steps = [
+    msg('restore.step.unpack','Unpack backup'),
+    msg('restore.step.createRoles','Create roles'),
+    msg('restore.step.createCategories','Create categories'),
+    msg('restore.step.createChannels','Create channels'),
+    msg('restore.step.applyOverwrites','Apply permission overwrites'),
+    msg('restore.step.uploadEmojis','Upload emojis'),
+    msg('restore.step.uploadStickers','Upload stickers'),
+    msg('restore.step.recreateWebhooks','Recreate webhooks'),
+    msg('restore.step.recreateEvents','Recreate scheduled events'),
+    msg('restore.step.recreateInvites','Recreate invites'),
+    msg('restore.step.recreateBans','Recreate bans'),
+    msg('restore.step.applyMemberRoles','Apply member roles'),
+    msg('restore.step.applyGuildSettings','Apply guild settings'),
+    msg('restore.step.finalize','Finalize')
+  ];
   let content = steps.map(s=>`- \u23f3 ${s}`).join('\n');
   await interaction.reply({ content });
   async function markNext(){ content = content.replace('\u23f3','\u2705'); try{ await interaction.editReply({ content }); }catch(e){ log?.warn&&log.warn('editReply failed',{err:String(e)}); } }
 
   const guild = interaction.guild || (interaction.client && interaction.client.guilds && interaction.client.guilds.cache && interaction.client.guilds.cache.get(interaction.guildId));
-  if(!guild){ await interaction.editReply({ content:'This command must be used in a guild.'}); return null; }
+  if(!guild){ await interaction.editReply({ content: msg('restore.notInGuild','This command must be used in a guild.')}); return null; }
 
   const filename = (interaction.options && interaction.options.getString && interaction.options.getString('filename')) || (interaction.data && interaction.data.options && interaction.data.options[0] && interaction.data.options[0].value) || null;
-  if(!filename){ await interaction.editReply({ content:'No filename provided.'}); return null; }
+  if(!filename){ await interaction.editReply({ content: msg('restore.noFilename','No filename provided.')}); return null; }
 
   const path = await import('node:path');
   const fs = await import('node:fs/promises');
@@ -34,7 +49,7 @@ export default async function ({ log, msg }, interaction) {
   const extractDir = `${tmpBase}/restore-${guild.id}-${ts}`;
 
   let backup;
-  try{ backup = await unpackBackup(tmpBase, filename, extractDir, log); }catch(err){ log?.error&&log.error('Unpack failed',{err:String(err)}); await interaction.editReply({ content:`Unpack failed: ${String(err)}`}); return null; }
+  try{ backup = await unpackBackup(tmpBase, filename, extractDir, log); }catch(err){ log?.error&&log.error('Unpack failed',{err:String(err)}); await interaction.editReply({ content: msg('restore.unpackFailed', `Unpack failed: ${String(err)}`)}); return null; }
   // adapt _metadata for role creator
   backup._metadata = backup._metadata||backup.metadata||{};
   await markNext();
@@ -93,11 +108,11 @@ export default async function ({ log, msg }, interaction) {
   try{ log?.info&&log.info('Restore finished.'); }catch(e){}
   await markNext();
 
-  try{ await interaction.followUp({ content:`Restore attempted from ${filename}. Check logs for details.`, ephemeral:false }); }catch(e){}
+  try{ await interaction.followUp({ content: msg('restore.attemptedFrom', `Restore attempted from ${filename}. Check logs for details.`), ephemeral:false }); }catch(e){}
 
   // summary integrations
   try{
-    const note = summarizeIntegrations(backup.data || {});
+    const note = summarizeIntegrations(backup.data || {}, msg);
     await interaction.followUp({ content: note, ephemeral:false });
   }catch(e){ log?.warn&&log.warn('Failed to send integrations note',{err:String(e)}); }
 

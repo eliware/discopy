@@ -9,18 +9,18 @@ export default async function ({ log, msg }, interaction) {
   log.debug('backup Request', { interaction });
 
   const steps = [
-    'Guild settings',
-    'Roles',
-    'Channels & categories',
-    'Permission overwrites',
-    'Emojis (downloaded)',
-    'Stickers (downloaded)',
-    'Webhooks',
-    'Scheduled events',
-    'Invites',
-    'Bans (metadata)',
-    'Members (metadata)',
-    'Save ZIP file'
+    msg('backup.step.guildSettings', 'Guild settings'),
+    msg('backup.step.roles', 'Roles'),
+    msg('backup.step.channels', 'Channels & categories'),
+    msg('backup.step.overwrites', 'Permission overwrites'),
+    msg('backup.step.emojis', 'Emojis (downloaded)'),
+    msg('backup.step.stickers', 'Stickers (downloaded)'),
+    msg('backup.step.webhooks', 'Webhooks'),
+    msg('backup.step.scheduledEvents', 'Scheduled events'),
+    msg('backup.step.invites', 'Invites'),
+    msg('backup.step.bans', 'Bans (metadata)'),
+    msg('backup.step.members', 'Members (metadata)'),
+    msg('backup.step.saveZip', 'Save ZIP file')
   ];
 
   let content = steps.map(s => `- \u23f3 ${s}`).join('\n');
@@ -125,19 +125,19 @@ export default async function ({ log, msg }, interaction) {
     backup._saved = { path: saved.zipPath, filename: saved.zipName };
     await markNext();
 
-    content += `\n\nBackup saved: ${saved.zipName}`;
+    content += `\n\n${msg('backup.saved', `Backup saved: ${saved.zipName}`)}`;
 
     // attach zip to reply
     try { await interaction.editReply({ content, files: [{ attachment: backup._saved.path, name: backup._saved.filename }] }); }
     catch (err) {
       log.warn('editReply with file failed, attempting followUp', { err: String(err) });
-      try { await interaction.followUp({ content: `Backup saved: ${backup._saved.filename}`, files: [{ attachment: backup._saved.path, name: backup._saved.filename }], ephemeral: false }); await interaction.editReply({ content }); } catch (err2) { log.error('Failed to send backup zip', { err: String(err2) }); try { await interaction.editReply({ content }); } catch (_) {} }
+      try { await interaction.followUp({ content: msg('backup.followupSaved', `Backup saved: ${backup._saved.filename}`), files: [{ attachment: backup._saved.path, name: backup._saved.filename }], ephemeral: false }); await interaction.editReply({ content }); } catch (err2) { log.error('Failed to send backup zip', { err: String(err2) }); try { await interaction.editReply({ content }); } catch (_) {} }
     }
 
   } catch (err) {
     log.error('Failed to save ZIP', { err: String(err) });
     await markNext();
-    content += `\n\nBackup attempted but failed to save: ${String(err)}`;
+    content += `\n\n${msg('backup.saveFailed', `Backup attempted but failed to save: ${String(err)}`)}`;
     try { await interaction.editReply({ content }); } catch (_) {}
   }
 
