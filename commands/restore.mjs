@@ -16,30 +16,30 @@ import summarizeIntegrations from '../src/restore/summarizeIntegrations.mjs';
 export default async function ({ log, msg }, interaction) {
   log.debug('restore Request', { interaction });
   const steps = [
-    msg('restore.step.unpack','Unpack backup'),
-    msg('restore.step.createRoles','Create roles'),
-    msg('restore.step.createCategories','Create categories'),
-    msg('restore.step.createChannels','Create channels'),
-    msg('restore.step.applyOverwrites','Apply permission overwrites'),
-    msg('restore.step.uploadEmojis','Upload emojis'),
-    msg('restore.step.uploadStickers','Upload stickers'),
-    msg('restore.step.recreateWebhooks','Recreate webhooks'),
-    msg('restore.step.recreateEvents','Recreate scheduled events'),
-    msg('restore.step.recreateInvites','Recreate invites'),
-    msg('restore.step.recreateBans','Recreate bans'),
-    msg('restore.step.applyMemberRoles','Apply member roles'),
-    msg('restore.step.applyGuildSettings','Apply guild settings'),
-    msg('restore.step.finalize','Finalize')
+    msg('restore.step.unpack', 'Unpack backup'),
+    msg('restore.step.createRoles', 'Create roles'),
+    msg('restore.step.createCategories', 'Create categories'),
+    msg('restore.step.createChannels', 'Create channels'),
+    msg('restore.step.applyOverwrites', 'Apply permission overwrites'),
+    msg('restore.step.uploadEmojis', 'Upload emojis'),
+    msg('restore.step.uploadStickers', 'Upload stickers'),
+    msg('restore.step.recreateWebhooks', 'Recreate webhooks'),
+    msg('restore.step.recreateEvents', 'Recreate scheduled events'),
+    msg('restore.step.recreateInvites', 'Recreate invites'),
+    msg('restore.step.recreateBans', 'Recreate bans'),
+    msg('restore.step.applyMemberRoles', 'Apply member roles'),
+    msg('restore.step.applyGuildSettings', 'Apply guild settings'),
+    msg('restore.step.finalize', 'Finalize')
   ];
-  let content = steps.map(s=>`- \u23f3 ${s}`).join('\n');
+  let content = steps.map(s => `- \u23f3 ${s}`).join('\n');
   await interaction.reply({ content });
-  async function markNext(){ content = content.replace('\u23f3','\u2705'); try{ await interaction.editReply({ content }); }catch(e){ log?.warn&&log.warn('editReply failed',{err:String(e)}); } }
+  async function markNext() { content = content.replace('\u23f3', '\u2705'); try { await interaction.editReply({ content }); } catch (e) { log?.warn && log.warn('editReply failed', { err: String(e) }); } }
 
   const guild = interaction.guild || (interaction.client && interaction.client.guilds && interaction.client.guilds.cache && interaction.client.guilds.cache.get(interaction.guildId));
-  if(!guild){ await interaction.editReply({ content: msg('restore.notInGuild','This command must be used in a guild.')}); return null; }
+  if (!guild) { await interaction.editReply({ content: msg('restore.notInGuild', 'This command must be used in a guild.') }); return null; }
 
   const filename = (interaction.options && interaction.options.getString && interaction.options.getString('filename')) || (interaction.data && interaction.data.options && interaction.data.options[0] && interaction.data.options[0].value) || null;
-  if(!filename){ await interaction.editReply({ content: msg('restore.noFilename','No filename provided.')}); return null; }
+  if (!filename) { await interaction.editReply({ content: msg('restore.noFilename', 'No filename provided.') }); return null; }
 
   const path = await import('node:path');
   const fs = await import('node:fs/promises');
@@ -49,73 +49,73 @@ export default async function ({ log, msg }, interaction) {
   const extractDir = `${tmpBase}/restore-${guild.id}-${ts}`;
 
   let backup;
-  try{ backup = await unpackBackup(tmpBase, filename, extractDir, log); }catch(err){ log?.error&&log.error('Unpack failed',{err:String(err)}); await interaction.editReply({ content: msg('restore.unpackFailed', `Unpack failed: ${String(err)}`)}); return null; }
+  try { backup = await unpackBackup(tmpBase, filename, extractDir, log); } catch (err) { log?.error && log.error('Unpack failed', { err: String(err) }); await interaction.editReply({ content: msg('restore.unpackFailed', `Unpack failed: ${String(err)}`) }); return null; }
   // adapt _metadata for role creator
-  backup._metadata = backup._metadata||backup.metadata||{};
+  backup._metadata = backup._metadata || backup.metadata || {};
   await markNext();
 
-  const maps = { roles:{}, channels:{}, categories:{}, emojis:{}, stickers:{} };
+  const maps = { roles: {}, channels: {}, categories: {}, emojis: {}, stickers: {} };
 
   // roles
   await createRoles(backup, guild, maps, log);
   await markNext();
 
   // categories
-  await createCategories(Array.isArray(backup.data.channels)?backup.data.channels:[], guild, maps, log);
+  await createCategories(Array.isArray(backup.data.channels) ? backup.data.channels : [], guild, maps, log);
   await markNext();
 
   // channels
-  await createChannels(Array.isArray(backup.data.channels)?backup.data.channels:[], guild, maps, log);
+  await createChannels(Array.isArray(backup.data.channels) ? backup.data.channels : [], guild, maps, log);
   await markNext();
 
   // overwrites
-  await applyOverwrites(Array.isArray(backup.data.channels)?backup.data.channels:[], guild, maps, backup._metadata, log);
+  await applyOverwrites(Array.isArray(backup.data.channels) ? backup.data.channels : [], guild, maps, backup._metadata, log);
   await markNext();
 
   // emojis
-  await uploadEmojis(Array.isArray(backup.data.emojis)?backup.data.emojis:[], guild, extractDir, maps, log);
+  await uploadEmojis(Array.isArray(backup.data.emojis) ? backup.data.emojis : [], guild, extractDir, maps, log);
   await markNext();
 
   // stickers
-  await uploadStickers(Array.isArray(backup.data.stickers)?backup.data.stickers:[], guild, extractDir, maps, log);
+  await uploadStickers(Array.isArray(backup.data.stickers) ? backup.data.stickers : [], guild, extractDir, maps, log);
   await markNext();
 
   // webhooks
-  await recreateWebhooks(Array.isArray(backup.data.webhooks)?backup.data.webhooks:[], guild, maps, log);
+  await recreateWebhooks(Array.isArray(backup.data.webhooks) ? backup.data.webhooks : [], guild, maps, log);
   await markNext();
 
   // events
-  await recreateEvents(Array.isArray(backup.data.scheduledEvents)?backup.data.scheduledEvents:[], guild, maps, log);
+  await recreateEvents(Array.isArray(backup.data.scheduledEvents) ? backup.data.scheduledEvents : [], guild, maps, log);
   await markNext();
 
   // invites
-  await recreateInvites(Array.isArray(backup.data.invites)?backup.data.invites:[], guild, maps, log);
+  await recreateInvites(Array.isArray(backup.data.invites) ? backup.data.invites : [], guild, maps, log);
   await markNext();
 
   // bans
-  await recreateBans(Array.isArray(backup.data.bans)?backup.data.bans:[], guild, maps, log);
+  await recreateBans(Array.isArray(backup.data.bans) ? backup.data.bans : [], guild, maps, log);
   await markNext();
 
   // member roles
-  await applyMemberRoles(Array.isArray(backup.data.members)?backup.data.members:[], guild, maps, log);
+  await applyMemberRoles(Array.isArray(backup.data.members) ? backup.data.members : [], guild, maps, log);
   await markNext();
 
   // apply guild settings
-  await applyGuildSettings(backup.data.guild||{}, guild, maps, extractDir, log);
+  await applyGuildSettings(backup.data.guild || {}, guild, maps, extractDir, log);
   await markNext();
 
   // finalize
-  try{ log?.info&&log.info('Restore finished.'); }catch(e){}
+  try { log?.info && log.info('Restore finished.'); } catch (e) { }
   await markNext();
 
-  try{ await interaction.followUp({ content: msg('restore.attemptedFrom', `Restore attempted from ${filename}. Check logs for details.`), ephemeral:false }); }catch(e){}
+  try { await interaction.followUp({ content: msg('restore.attemptedFrom', `Restore attempted from ${filename}. Check logs for details.`), ephemeral: false }); } catch (e) { }
 
   // summary integrations
-  try{
+  try {
     const note = summarizeIntegrations(backup.data || {}, msg);
-    await interaction.followUp({ content: note, ephemeral:false });
-  }catch(e){ log?.warn&&log.warn('Failed to send integrations note',{err:String(e)}); }
+    await interaction.followUp({ content: note, ephemeral: false });
+  } catch (e) { log?.warn && log.warn('Failed to send integrations note', { err: String(e) }); }
 
-  try{ await fs.rm(extractDir,{recursive:true,force:true}); }catch(e){}
+  try { await fs.rm(extractDir, { recursive: true, force: true }); } catch (e) { }
   return filename;
 }
