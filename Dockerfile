@@ -9,4 +9,4 @@ COPY package.json ./
 COPY package-lock.json ./
 RUN npm install || true
 COPY . .
-CMD ["node", "discopy.mjs"]
+CMD ["node", "skeleton.mjs"]

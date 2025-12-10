@@ -1,0 +1,23 @@
+{
+  "type": 1,
+  "name": "nuke",
+  "name_localizations": {
+    "en-US": "nuke"
+  },
+  "description": "Reset server to minimal default: remove channels, roles (except @everyone), emojis, stickers.",
+  "default_permission": true,
+  "default_member_permissions": "8",
+  "permissions": {
+    "user_permissions": [
+      "ADMINISTRATOR"
+    ]
+  },
+  "options": [
+    {
+      "type": 5,
+      "name": "dry_run",
+      "description": "If true, only simulate (default: true)",
+      "required": false
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+    "type": 1,
+    "name": "backup",
+    "name_localizations": {
+        "en-US": "backup",
+        "en-GB": "backup"
+    },
+    "description": "Create a server backup (without messages).",
+    "description_localizations": {
+        "en-US": "Create a server backup (without messages).",
+        "en-GB": "Create a server backup (without messages)."
+    },
+    "default_permission": true,
+    "default_member_permissions": "8",
+    "permissions": {
+        "user_permissions": [
+            "ADMINISTRATOR"
+        ]
+    }
+}

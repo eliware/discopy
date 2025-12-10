@@ -1,0 +1,20 @@
+{
+  "type": 1,
+  "name": "restore",
+  "name_localizations": { "en-US": "restore", "en-GB": "restore" },
+  "description": "Restore a server from a backup file (best-effort, without messages).",
+  "description_localizations": { "en-US": "Restore a server from a backup file (best-effort, without messages).", "en-GB": "Restore a server from a backup file (best-effort, without messages)." },
+  "default_permission": true,
+  "default_member_permissions": "8",
+  "permissions": {
+    "user_permissions": [ "ADMINISTRATOR" ]
+  },
+  "options": [
+    {
+      "type": 3,
+      "name": "filename",
+      "description": "The backup filename to restore (from /opt/dcopy/backups)",
+      "required": true
+    }
+  ]
+}
