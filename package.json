@@ -3,25 +3,25 @@
   "type": "module",
   "version": "1.1.0",
   "description": "A modern Discord app built with Node.js, based on the eliware/discord foundation.",
-  "main": "skeleton.mjs",
+  "main": "discopy.mjs",
   "scripts": {
-    "start": "node skeleton.mjs",
+    "start": "node discopy.mjs",
     "test": "npx --node-options=\"--experimental-vm-modules --no-warnings\" jest --detectOpenHandles --silent"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/eliware/skeleton.git"
+    "url": "git+https://github.com/eliware/discopy.git"
   },
   "keywords": [
-    "skeleton",
+    "discopy",
     "nodejs"
   ],
   "author": "Eli Sterling, eliware.org <eli@eliware.org>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/eliware/skeleton/issues"
+    "url": "https://github.com/eliware/discopy/issues"
   },
-  "homepage": "https://github.com/eliware/skeleton#readme",
+  "homepage": "https://github.com/eliware/discopy#readme",
   "devDependencies": {
     "jest": "^30.2.0"
   },
