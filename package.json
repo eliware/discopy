@@ -1,30 +1,27 @@
 {
-  "name": "@eliware/discord-template",
+  "name": "@eliware/discopy",
   "type": "module",
   "version": "1.1.0",
   "description": "A modern Discord app built with Node.js, based on the eliware/discord foundation.",
-  "main": "discord-template.mjs",
+  "main": "discopy.mjs",
   "scripts": {
-    "start": "node discord-template.mjs",
+    "start": "node discopy.mjs",
     "test": "npx --node-options=\"--experimental-vm-modules --no-warnings\" jest --detectOpenHandles --silent"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/eliware/discord-template.git"
+    "url": "git+https://github.com/eliware/discopy.git"
   },
-  "keywords": [
-    "discord-template",
-    "discord",
-    "discord-bot",
-    "discord-app",
-    "nodejs"
-  ],
+    "keywords": [
+        "discopy",
+        "nodejs"
+    ],
   "author": "Eli Sterling, eliware.org <eli@eliware.org>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/eliware/discord-template/issues"
+    "url": "https://github.com/eliware/discopy/issues"
   },
-  "homepage": "https://github.com/eliware/discord-template#readme",
+  "homepage": "https://github.com/eliware/discopy#readme",
   "devDependencies": {
     "jest": "^30.2.0"
   },

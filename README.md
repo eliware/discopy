@@ -1,6 +1,6 @@
 # [![eliware.org](https://eliware.org/logos/brand.png)](https://discord.gg/M6aTR9eTwN)
 
-## @eliware/discord-template [![npm version](https://img.shields.io/npm/v/@eliware/discord-template.svg)](https://www.npmjs.com/package/@eliware/discord-template)[![license](https://img.shields.io/github/license/eliware/discord-template.svg)](LICENSE)[![build status](https://github.com/eliware/discord-template/actions/workflows/nodejs.yml/badge.svg)](https://github.com/eliware/discord-template/actions)
+## @eliware/discopy [![npm version](https://img.shields.io/npm/v/@eliware/discopy.svg)](https://www.npmjs.com/package/@eliware/discopy)[![license](https://img.shields.io/github/license/eliware/discopy.svg)](LICENSE)[![build status](https://github.com/eliware/discopy/actions/workflows/nodejs.yml/badge.svg)](https://github.com/eliware/discopy/actions)
 
 A modern Discord app built with Node.js, based on the [@eliware/discord](https://github.com/eliware/discord) foundation.
 
@@ -36,8 +36,8 @@ A modern Discord app built with Node.js, based on the [@eliware/discord](https:/
 1. **Clone this project:**
 
    ```bash
-   git clone https://github.com/eliware/discord-template.git
-   cd discord-template
+   git clone https://github.com/eliware/discopy.git
+   cd discopy
    npm install
    ```
 
@@ -51,7 +51,7 @@ A modern Discord app built with Node.js, based on the [@eliware/discord](https:/
    ```bash
    npm start
    # or
-   node discord-template.mjs
+   node discopy.mjs
    ```
 
 ## Configuration
@@ -61,15 +61,15 @@ A modern Discord app built with Node.js, based on the [@eliware/discord](https:/
 
 ## Running as a Service (systemd)
 
-1. Copy `discord-template.service` to `/usr/lib/systemd/system/discord-template.service`.
+1. Copy `discopy.service` to `/usr/lib/systemd/system/discopy.service`.
 2. Edit the paths and user/group as needed.
 3. Reload systemd and start the service:
 
    ```bash
    sudo systemctl daemon-reload
-   sudo systemctl enable discord-template
-   sudo systemctl start discord-template
-   sudo systemctl status discord-template
+   sudo systemctl enable discopy
+   sudo systemctl start discopy
+   sudo systemctl status discopy
    ```
 
 ## Docker
@@ -77,13 +77,13 @@ A modern Discord app built with Node.js, based on the [@eliware/discord](https:/
 1. Build the Docker image:
 
    ```bash
-   docker build -t discord-template .
+   docker build -t discopy .
    ```
 
 2. Run the container:
 
    ```bash
-   docker run --env-file .env discord-template
+   docker run --env-file .env discopy
    ```
 
 ## Customization
@@ -128,7 +128,7 @@ For help, questions, or to chat with the author and community, visit:
 ## Links
 
 - [Home Page](https://eliware.org)
-- [GitHub Repo](https://github.com/eliware/discord-template)
+- [GitHub Repo](https://github.com/eliware/discopy)
 - [GitHub Org](https://github.com/eliware)
 - [GitHub Personal](https://github.com/eli-sterling)
 - [Discord](https://discord.gg/M6aTR9eTwN)
