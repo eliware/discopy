@@ -1,29 +1,27 @@
 {
-  "name": "@eliware/project-template",
+  "name": "@eliware/discord-template",
   "type": "module",
   "version": "1.1.0",
   "description": "A template for starting new Node.js projects.",
-  "main": "project-template.mjs",
+  "main": "discord-template.mjs",
   "scripts": {
-    "start": "node project-template.mjs",
+    "start": "node discord-template.mjs",
     "test": "npx --node-options=\"--experimental-vm-modules --no-warnings\" jest --detectOpenHandles --silent"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/eliware/project-template.git"
+    "url": "git+https://github.com/eliware/discord-template.git"
   },
-  "keywords": [
-    "project-template",
-    "nodejs",
-    "starter",
-    "template"
-  ],
+    "keywords": [
+        "discord-template",
+        "nodejs"
+    ],
   "author": "Eli Sterling, eliware.org <eli@eliware.org>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/eliware/project-template/issues"
+    "url": "https://github.com/eliware/discord-template/issues"
   },
-  "homepage": "https://github.com/eliware/project-template#readme",
+  "homepage": "https://github.com/eliware/discord-template#readme",
   "devDependencies": {
     "jest": "^30.0.4"
   },
