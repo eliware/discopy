@@ -73,9 +73,9 @@ export default async function ({ log, msg }, interaction) {
           if (!manager) { ch.permissionOverwrites = []; continue; }
           let overwritesArr = [];
           if (manager.cache && typeof manager.cache.map === 'function') overwritesArr = manager.cache.map(o => o);
-          else if (typeof manager.map === 'function') { try { overwritesArr = manager.map(o => o); } catch (e) {} }
+          else if (typeof manager.map === 'function') { try { overwritesArr = manager.map(o => o); } catch (e) { } }
           else if (Array.isArray(manager)) overwritesArr = manager;
-          else { try { for (const o of manager) overwritesArr.push(o); } catch (e) {} }
+          else { try { for (const o of manager) overwritesArr.push(o); } catch (e) { } }
           ch.permissionOverwrites = overwritesArr.map(o => ({ id: String(o.id), type: o.type, allow: o.allow ? (o.allow.bitfield !== undefined ? o.allow.bitfield : o.allow) : null, deny: o.deny ? (o.deny.bitfield !== undefined ? o.deny.bitfield : o.deny) : null }));
         } catch (e) { ch.permissionOverwrites = { error: String(e) }; }
       }
@@ -98,7 +98,7 @@ export default async function ({ log, msg }, interaction) {
   // Step 7: Webhooks
   try {
     if (guild && guild.fetchWebhooks) {
-      try { const webhooks = await guild.fetchWebhooks(); backup.data.webhooks = webhooks.map(w => ({ id: w.id, name: w.name, channelId: w.channelId, url: w.url || null })); } catch (e) { backup.data.webhooks = { error: 'fetch failed: '+String(e) }; }
+      try { const webhooks = await guild.fetchWebhooks(); backup.data.webhooks = webhooks.map(w => ({ id: w.id, name: w.name, channelId: w.channelId, url: w.url || null })); } catch (e) { backup.data.webhooks = { error: 'fetch failed: ' + String(e) }; }
     } else backup.data.webhooks = [];
   } catch (err) { log.warn('Webhooks collection failed', { err: String(err) }); backup.data.webhooks = { error: String(err) }; }
   await markNext();
@@ -108,11 +108,11 @@ export default async function ({ log, msg }, interaction) {
   await markNext();
 
   // Step 9: Invites
-  try { if (guild && guild.fetchInvites) { try { const invites = await guild.fetchInvites(); backup.data.invites = invites.map(i => ({ code: i.code, channelId: i.channelId, maxUses: i.maxUses, maxAge: i.maxAge, temporary: i.temporary })); } catch (e) { backup.data.invites = { error: 'fetch failed: '+String(e) }; } } else backup.data.invites = []; } catch (err) { log.warn('Invites failed', { err: String(err) }); backup.data.invites = { error: String(err) }; }
+  try { if (guild && guild.fetchInvites) { try { const invites = await guild.fetchInvites(); backup.data.invites = invites.map(i => ({ code: i.code, channelId: i.channelId, maxUses: i.maxUses, maxAge: i.maxAge, temporary: i.temporary })); } catch (e) { backup.data.invites = { error: 'fetch failed: ' + String(e) }; } } else backup.data.invites = []; } catch (err) { log.warn('Invites failed', { err: String(err) }); backup.data.invites = { error: String(err) }; }
   await markNext();
 
   // Step 10: Bans metadata
-  try { if (guild && guild.bans && guild.bans.fetch) { try { const bans = await guild.bans.fetch(); backup.data.bans = bans.map(b => ({ userId: b.user.id, reason: b.reason || null })); } catch (e) { backup.data.bans = { error: 'fetch failed: '+String(e) }; } } else backup.data.bans = []; } catch (err) { log.warn('Bans failed', { err: String(err) }); backup.data.bans = { error: String(err) }; }
+  try { if (guild && guild.bans && guild.bans.fetch) { try { const bans = await guild.bans.fetch(); backup.data.bans = bans.map(b => ({ userId: b.user.id, reason: b.reason || null })); } catch (e) { backup.data.bans = { error: 'fetch failed: ' + String(e) }; } } else backup.data.bans = []; } catch (err) { log.warn('Bans failed', { err: String(err) }); backup.data.bans = { error: String(err) }; }
   await markNext();
 
   // Step 11: Members metadata
@@ -131,14 +131,14 @@ export default async function ({ log, msg }, interaction) {
     try { await interaction.editReply({ content, files: [{ attachment: backup._saved.path, name: backup._saved.filename }] }); }
     catch (err) {
       log.warn('editReply with file failed, attempting followUp', { err: String(err) });
-      try { await interaction.followUp({ content: msg('backup.followupSaved', `Backup saved: ${backup._saved.filename}`), files: [{ attachment: backup._saved.path, name: backup._saved.filename }], ephemeral: false }); await interaction.editReply({ content }); } catch (err2) { log.error('Failed to send backup zip', { err: String(err2) }); try { await interaction.editReply({ content }); } catch (_) {} }
+      try { await interaction.followUp({ content: msg('backup.followupSaved', `Backup saved: ${backup._saved.filename}`), files: [{ attachment: backup._saved.path, name: backup._saved.filename }], ephemeral: false }); await interaction.editReply({ content }); } catch (err2) { log.error('Failed to send backup zip', { err: String(err2) }); try { await interaction.editReply({ content }); } catch (_) { } }
     }
 
   } catch (err) {
     log.error('Failed to save ZIP', { err: String(err) });
     await markNext();
     content += `\n\n${msg('backup.saveFailed', `Backup attempted but failed to save: ${String(err)}`)}`;
-    try { await interaction.editReply({ content }); } catch (_) {}
+    try { await interaction.editReply({ content }); } catch (_) { }
   }
 
   log.debug('backup Response', { saved: backup._saved || null });
