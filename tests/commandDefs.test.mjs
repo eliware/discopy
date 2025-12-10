@@ -23,6 +23,14 @@ describe('Command definitions (.json) are valid and follow Discord command schem
       }
     }
   }
+  function checkDescription(str, context) {
+    if (typeof str !== 'string') {
+      throw new Error(`${context} is not a string (type=${typeof str})`);
+    }
+    if (str.length > 100) {
+      throw new Error(`${context} is too long (${str.length} chars): "${str}"`);
+    }
+  }
   if (files.length === 0) {
     test('dummy test - no command definition files present', () => {
       expect(true).toBe(true);
@@ -43,6 +51,9 @@ describe('Command definitions (.json) are valid and follow Discord command schem
     if (parsed.type === 1) {
       test(`${file} (CHAT_INPUT) has valid description, name, and localizations`, () => {
         expect(typeof parsed.description).toBe('string');
+        if (typeof parsed.description === 'string' && parsed.description.length > 100) {
+          throw new Error(`${file} description is too long (${parsed.description.length} chars): "${parsed.description}"`);
+        }
         checkChatInput(parsed.name, `${file} name`);
         expect(parsed.name_localizations).toBeDefined();
         for (const key of localeKeys) {
@@ -54,6 +65,7 @@ describe('Command definitions (.json) are valid and follow Discord command schem
         for (const key of localeKeys) {
           expect(parsed.description_localizations[key]).toBeDefined();
           expect(typeof parsed.description_localizations[key]).toBe('string');
+          checkDescription(parsed.description_localizations[key], `${file} description_localizations[${key}]`);
         }
       });
       if (parsed.options) {
@@ -68,6 +80,7 @@ describe('Command definitions (.json) are valid and follow Discord command schem
               checkChatInput(opt.name_localizations[key], `${file} option[${i}] name_localizations[${key}]`);
               expect(opt.description_localizations[key]).toBeDefined();
               expect(typeof opt.description_localizations[key]).toBe('string');
+              checkDescription(opt.description_localizations[key], `${file} option[${i}] description_localizations[${key}]`);
             }
           });
         }
