@@ -1,20 +1,80 @@
 {
-    "type": 1,
-    "name": "backup",
-    "name_localizations": {
-        "en-US": "backup",
-        "en-GB": "backup"
-    },
-    "description": "Create a server backup (without messages).",
-    "description_localizations": {
-        "en-US": "Create a server backup (without messages).",
-        "en-GB": "Create a server backup (without messages)."
-    },
-    "default_permission": true,
-    "default_member_permissions": "8",
-    "permissions": {
-        "user_permissions": [
-            "ADMINISTRATOR"
-        ]
-    }
+  "type": 1,
+  "name": "backup",
+  "name_localizations": {
+    "bg": "архивиране",
+    "cs": "záloha",
+    "da": "sikkerhedskopi",
+    "de": "sicherung",
+    "el": "αντίγραφο_ασφαλείας",
+    "en-GB": "backup",
+    "en-US": "backup",
+    "es-419": "respaldo",
+    "es-ES": "copia_de_seguridad",
+    "fi": "varmuuskopio",
+    "fr": "sauvegarde",
+    "hi": "बैकअप",
+    "hr": "sigurnosna_kopija",
+    "hu": "biztonsági_mentés",
+    "id": "cadangan",
+    "it": "backup",
+    "ja": "バックアップ",
+    "ko": "백업",
+    "lt": "atsarginė_kopija",
+    "nl": "back-up",
+    "no": "sikkerhetskopi",
+    "pl": "kopia_zapasowa",
+    "pt-BR": "backup",
+    "ro": "copie_de_rezervă",
+    "ru": "резервная_копия",
+    "sv-SE": "säkerhetskopia",
+    "th": "สำรองข้อมูล",
+    "tr": "yedek",
+    "uk": "резервна_копія",
+    "vi": "sao_lưu",
+    "zh-CN": "备份",
+    "zh-TW": "備份"
+  },
+  "description": "Create a server backup (without messages).",
+  "description_localizations": {
+    "bg": "Създава резервно копие на сървъра (без съобщения).",
+    "cs": "Vytvoří zálohu serveru (bez zpráv).",
+    "da": "Opretter en sikkerhedskopi af serveren (uden beskeder).",
+    "de": "Erstellt eine Serversicherung (ohne Nachrichten).",
+    "el": "Δημιουργεί αντίγραφο ασφαλείας του διακομιστή (χωρίς μηνύματα).",
+    "en-GB": "Create a server backup (without messages).",
+    "en-US": "Create a server backup (without messages).",
+    "es-419": "Crea un respaldo del servidor (sin mensajes).",
+    "es-ES": "Crea una copia de seguridad del servidor (sin mensajes).",
+    "fi": "Luo palvelimen varmuuskopion (ilman viestejä).",
+    "fr": "Crée une sauvegarde du serveur (sans messages).",
+    "hi": "सर्वर का बैकअप बनाता है (बिना संदेशों के)।",
+    "hr": "Stvara sigurnosnu kopiju poslužitelja (bez poruka).",
+    "hu": "Szerver biztonsági mentésének létrehozása (üzenetek nélkül).",
+    "id": "Membuat cadangan server (tanpa pesan).",
+    "it": "Crea un backup del server (senza messaggi).",
+    "ja": "サーバーのバックアップを作成します（メッセージなし）。",
+    "ko": "서버 백업을 생성합니다 (메시지 없음).",
+    "lt": "Sukuria serverio atsarginę kopiją (be pranešimų).",
+    "nl": "Maakt een serverback-up (zonder berichten).",
+    "no": "Oppretter en sikkerhetskopi av serveren (uten meldinger).",
+    "pl": "Tworzy kopię zapasową serwera (bez wiadomości).",
+    "pt-BR": "Cria um backup do servidor (sem mensagens).",
+    "ro": "Creează o copie de rezervă a serverului (fără mesaje).",
+    "ru": "Создает резервную копию сервера (без сообщений).",
+    "sv-SE": "Skapar en säkerhetskopia av servern (utan meddelanden).",
+    "th": "สร้างข้อมูลสำรองของเซิร์ฟเวอร์ (ไม่มีข้อความ)",
+    "tr": "Sunucunun yedeğini oluşturur (mesaj olmadan).",
+    "uk": "Створює резервну копію сервера (без повідомлень).",
+    "vi": "Tạo bản sao lưu máy chủ (không có tin nhắn).",
+    "zh-CN": "创建服务器备份（不包含消息）。",
+    "zh-TW": "建立伺服器備份（不包含訊息）。"
+  },
+  "default_permission": true,
+  "default_member_permissions": "8",
+  "permissions": {
+    "user_permissions": [
+      "ADMINISTRATOR"
+    ]
+  }
 }
