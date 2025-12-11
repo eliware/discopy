@@ -1,5 +1,5 @@
 {
-    "help": "This is the help text.",
+    "help": "Shows available commands and basic usage:\n- /backup — Create a backup ZIP of the current guild (roles, channels, categories, permission overwrites, emojis, stickers, webhooks, invites, scheduled events, bans). The command replies with the saved filename and stores the archive under `backups/`.\n- /restore <filename> — Restore a previously created backup into the current guild. Provide the exact filename shown when the backup was saved.\n- /reset — Apply or recreate guild defaults and optionally delete existing content (Administrator permission required).\n- /help — Display this help message.\n\nNotes: Scheduled daily backups may run at 09:00 UTC (04:00 EST) if enabled by configuration. Check bot logs for progress, errors, and the exact saved filename when a backup completes.",
     "backup.step.guildSettings": "Guild settings",
     "backup.step.roles": "Roles",
     "backup.step.channels": "Channels & categories",
