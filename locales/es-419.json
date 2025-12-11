@@ -1,7 +1,6 @@
 {
-    "help": "Este es el texto de ayuda.",
-
-    "backup.step.guildSettings": "Ajustes del servidor",
+    "help": "Muestra los comandos disponibles y el uso básico:\n- /backup — Crea un ZIP de copia de seguridad del servidor actual (roles, canales, categorías, sobrescrituras de permisos, emojis, stickers, webhooks, invitaciones, eventos programados, baneos). El comando responde con el nombre de archivo guardado y almacena el archivo en `backups/`.\n- /restore <filename> — Restaura una copia de seguridad creada previamente en el servidor actual. Proporciona el nombre de archivo exacto que se mostró cuando se guardó la copia.\n- /reset — Aplica o recrea los valores predeterminados del servidor y, opcionalmente, elimina el contenido existente (se requiere permiso de Administrador).\n- /help — Muestra este mensaje de ayuda.\n\nNotas: Las copias de seguridad diarias programadas pueden ejecutarse a las 09:00 UTC (04:00 EST) si están habilitadas en la configuración. Revisa los registros del bot para ver el progreso, los errores y el nombre de archivo exacto guardado cuando se complete una copia de seguridad.",
+    "backup.step.guildSettings": "Configuración del servidor",
     "backup.step.roles": "Roles",
     "backup.step.channels": "Canales y categorías",
     "backup.step.overwrites": "Sobrescrituras de permisos",
@@ -15,9 +14,8 @@
     "backup.step.saveZip": "Guardar archivo ZIP",
     "backup.saved": "Copia de seguridad guardada: {filename}",
     "backup.followupSaved": "Copia de seguridad guardada: {filename}",
-    "backup.saveFailed": "Se intentó guardar la copia de seguridad, pero falló: {error}",
-
-    "reset.permissionRequired": "Debes tener permisos de Administrador para ejecutar /reset.",
+    "backup.saveFailed": "La copia de seguridad se intentó pero falló al guardar: {error}",
+    "reset.permissionRequired": "Debes tener permiso de Administrador para ejecutar /reset.",
     "reset.step.plan": "Plan",
     "reset.step.delete": "Eliminar contenido",
     "reset.step.applyDefaults": "Aplicar valores predeterminados del servidor",
@@ -25,8 +23,7 @@
     "reset.step.finalize": "Finalizar",
     "reset.notInGuild": "Este comando debe usarse en un servidor.",
     "reset.plannedDeletions": "Eliminaciones planificadas: roles={roles}, canales={channels}, emojis={emojis}, stickers={stickers}\nSimulación: {dryRun}",
-    "reset.finalResult": "restablecimiento {status}. Resultados: {results}. Valores predeterminados del servidor: {guildDefaultsResult}. Valores predeterminados creados: {created}",
-
+    "reset.finalResult": "reset {status}. Resultados: {results}. Valores predeterminados del servidor: {guildDefaultsResult}. Predeterminados creados: {created}",
     "restore.step.unpack": "Desempaquetar copia de seguridad",
     "restore.step.createRoles": "Crear roles",
     "restore.step.createCategories": "Crear categorías",
@@ -39,13 +36,13 @@
     "restore.step.recreateInvites": "Recrear invitaciones",
     "restore.step.recreateBans": "Recrear baneos",
     "restore.step.applyMemberRoles": "Aplicar roles a miembros",
-    "restore.step.applyGuildSettings": "Aplicar ajustes del servidor",
+    "restore.step.applyGuildSettings": "Aplicar configuración del servidor",
     "restore.step.finalize": "Finalizar",
     "restore.notInGuild": "Este comando debe usarse en un servidor.",
-    "restore.noFilename": "No se proporcionó un nombre de archivo.",
-    "restore.unpackFailed": "Error al desempaquetar: {error}",
-    "restore.attemptedFrom": "Se intentó restaurar desde {filename}. Revisa los registros para más detalles.",
-    "restore.integrations.managedHeader": "**Roles administrados / posibles bots e integraciones que no se pudieron recrear:**\\n",
+    "restore.noFilename": "No se proporcionó ningún nombre de archivo.",
+    "restore.unpackFailed": "Fallo al desempaquetar: {error}",
+    "restore.attemptedFrom": "Restauración intentada desde {filename}. Consulta los registros para obtener detalles.",
+    "restore.integrations.managedHeader": "**Roles administrados / posibles bots e integraciones que no pudieron recrearse:**\\n",
     "restore.integrations.webhooksHeader": "**Webhooks encontrados en la copia de seguridad (recreados cuando fue posible):**\\n",
     "restore.integrations.none": "No se detectaron roles administrados ni webhooks en la copia de seguridad."
 }

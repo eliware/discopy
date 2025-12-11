@@ -1,6 +1,5 @@
 {
-    "help": "This is the help text.",
-
+    "help": "Displays available commands and basic usage:\n- /backup — Create a backup ZIP file of the current guild (roles, channels, categories, permission overwrites, emojis, stickers, webhooks, invites, scheduled events, bans). The command replies with the saved filename and stores the archive in `backups/`.\n- /restore <filename> — Restore a previously created backup into the current guild. Provide the exact filename shown when the backup was saved.\n- /reset — Apply or recreate guild defaults, and optionally delete existing content (Administrator permission required).\n- /help — Display this help message.\n\nNotes: Scheduled daily backups may run at 09:00 UTC (04:00 EST) if enabled in the configuration. Check the bot logs for progress, errors and the exact saved filename when a backup completes.",
     "backup.step.guildSettings": "Guild settings",
     "backup.step.roles": "Roles",
     "backup.step.channels": "Channels & categories",
@@ -16,7 +15,6 @@
     "backup.saved": "Backup saved: {filename}",
     "backup.followupSaved": "Backup saved: {filename}",
     "backup.saveFailed": "Backup attempted but failed to save: {error}",
-
     "reset.permissionRequired": "You must have Administrator permission to run /reset.",
     "reset.step.plan": "Plan",
     "reset.step.delete": "Delete content",
@@ -26,7 +24,6 @@
     "reset.notInGuild": "This command must be used in a guild.",
     "reset.plannedDeletions": "Planned deletions: roles={roles}, channels={channels}, emojis={emojis}, stickers={stickers}\nDry run: {dryRun}",
     "reset.finalResult": "reset {status}. Results: {results}. Guild defaults: {guildDefaultsResult}. Defaults created: {created}",
-
     "restore.step.unpack": "Unpack backup",
     "restore.step.createRoles": "Create roles",
     "restore.step.createCategories": "Create categories",
@@ -45,7 +42,7 @@
     "restore.noFilename": "No filename provided.",
     "restore.unpackFailed": "Unpack failed: {error}",
     "restore.attemptedFrom": "Restore attempted from {filename}. Check logs for details.",
-    "restore.integrations.managedHeader": "**Managed roles / possible bots & integrations that could not be recreated:**\n",
-    "restore.integrations.webhooksHeader": "**Webhooks found in backup (recreated where possible):**\n",
+    "restore.integrations.managedHeader": "**Managed roles / possible bots & integrations that could not be recreated:**\\n",
+    "restore.integrations.webhooksHeader": "**Webhooks found in backup (recreated where possible):**\\n",
     "restore.integrations.none": "No managed roles or webhooks detected in the backup."
 }
