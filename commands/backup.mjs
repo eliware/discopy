@@ -40,6 +40,23 @@ export default async function ({ log, msg }, interaction) {
   const tmpdir = `/opt/discopy/backups/backup-${backup.metadata.guildId || 'unknown'}-${ts}`;
   try { await fs.mkdir(tmpdir, { recursive: true }); await fs.mkdir(path.join(tmpdir, 'emojis'), { recursive: true }); await fs.mkdir(path.join(tmpdir, 'stickers'), { recursive: true }); } catch (err) { log.warn('Failed to create temp dirs', { err: String(err) }); }
 
+  // IMPORTANT: Ensure we have an up-to-date members cache before collecting member metadata.
+  // This mirrors the fetch performed on client ready and ensures scheduled backups (which call this command
+  // with a fake interaction) also pull all guild members before the backup is saved.
+  try {
+    if (guild && guild.members && typeof guild.members.fetch === 'function') {
+      try {
+        log.info(`Fetching members for guild ${guild.id} (${guild.name}) before backup`);
+        await guild.members.fetch();
+        log.info(`Fetched members for guild ${guild.id}; cached=${guild.members.cache ? guild.members.cache.size : 'unknown'}`);
+      } catch (err) {
+        log.warn(`Failed to fetch members for guild ${guild.id} before backup: ${String(err)}`);
+      }
+    }
+  } catch (err) {
+    log.warn('Error attempting to fetch members before backup', { err: String(err) });
+  }
+
   // Step 1: Guild settings
   try {
     backup.data.guild = await collectGuild(guild, tmpdir, log);
@@ -116,7 +133,17 @@ export default async function ({ log, msg }, interaction) {
   await markNext();
 
   // Step 11: Members metadata
-  try { backup.data.members = (guild && guild.members && guild.members.cache) ? guild.members.cache.map(m => ({ id: m.id, user: { id: m.user?.id || null, username: m.user?.username || null }, nickname: m.nickname || null, roles: m.roles ? (m.roles.cache ? m.roles.cache.map(r => r.id) : (Array.isArray(m.roles) ? m.roles : [])) : [] })) : []; } catch (err) { log.warn('Members failed', { err: String(err) }); backup.data.members = { error: String(err) }; }
+  try {
+    try {
+      // If members were not fetched earlier for some reason, attempt again immediately before collecting.
+      if (guild && guild.members && typeof guild.members.fetch === 'function' && (!guild.members.cache || (guild.members.cache && guild.members.cache.size === 0))) {
+        log.info(`Attempting members.fetch() for guild ${guild ? guild.id : 'unknown'} right before member metadata collection`);
+        await guild.members.fetch().catch(e => log.warn('members.fetch() failed during members collection', String(e)));
+      }
+    } catch (e) { log.warn('members.fetch() pre-collection attempt failed', String(e)); }
+
+    backup.data.members = (guild && guild.members && guild.members.cache) ? guild.members.cache.map(m => ({ id: m.id, user: { id: m.user?.id || null, username: m.user?.username || null }, nickname: m.nickname || null, roles: m.roles ? (m.roles.cache ? m.roles.cache.map(r => r.id) : (Array.isArray(m.roles) ? m.roles : [])) : [] })) : [];
+  } catch (err) { log.warn('Members failed', { err: String(err) }); backup.data.members = { error: String(err) }; }
   await markNext();
 
   // Step 12: Save JSON and ZIP

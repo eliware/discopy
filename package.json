@@ -1,7 +1,7 @@
 {
     "name": "@eliware/discopy",
     "type": "module",
-    "version": "1.1.4",
+    "version": "1.1.5",
     "description": "Discord server backup & restore tool — export and restore roles, channels, permissions, emojis, stickers, webhooks, invites and more.",
     "main": "discopy.mjs",
     "scripts": {
